@@ -1,0 +1,69 @@
+# Chapter 10 — Internet
+### (Cybersecurity / Ethical Hacking Perspective)
+
+The Internet is the largest WAN in existence — a global network of networks. For a security professional, the Internet represents the **primary battlefield**: the largest attack surface, the source of most external threats, and the medium through which almost all modern attacks travel.
+
+---
+
+## 1. What Is the Internet?
+
+A globally connected system of interconnected computer networks that use the **TCP/IP protocol suite** to communicate. It's not owned by any single entity — it's a decentralized network of networks operated by ISPs, governments, corporations, and organizations worldwide.
+
+---
+
+## 2. How the Internet Works (Simplified)
+
+1. **ISPs (Internet Service Providers)** connect end users/organizations to the larger Internet backbone.
+2. **Backbone networks** (Tier 1 ISPs) carry massive amounts of global traffic between regions.
+3. **IXPs (Internet Exchange Points)** are physical locations where different networks interconnect and exchange traffic.
+4. **DNS** translates human-readable domain names into IP addresses so devices can locate each other.
+5. **Routing protocols** (like BGP) determine the path data takes across this massive network of networks.
+
+---
+
+## 3. Key Internet Infrastructure Components (Security Angle)
+
+| Component | Function | Security Relevance |
+|---|---|---|
+| **ISP** | Provides Internet access | Target of large-scale attacks (ISP-level DDoS, BGP hijacking) |
+| **DNS Root Servers** | Top of DNS hierarchy | Critical infrastructure — attacks here have massive blast radius |
+| **BGP (Border Gateway Protocol)** | Routes traffic between networks/ASes | Target of BGP hijacking — rerouting global traffic through malicious networks |
+| **IXP** | Where networks interconnect | High-value target for large-scale traffic interception |
+| **CDN (Content Delivery Network)** | Distributes content closer to users | Also a common target/vector for supply-chain style attacks |
+
+---
+
+## 4. The Internet as an Attack Surface
+
+- **Anyone, anywhere, can attempt to reach any publicly exposed service** — this is what makes the Internet fundamentally different (and riskier) than a private LAN.
+- **Reconnaissance is trivial:** Search engines (Shodan, Censys), WHOIS records, and DNS records reveal enormous amounts of information about Internet-facing infrastructure without ever touching the target directly (passive recon).
+- **Automated scanning is constant:** Any public IP address gets scanned by bots/attackers within minutes of being exposed — this is a documented, measurable fact in honeypot research.
+
+---
+
+## 5. Public vs Private IP Addressing (Internet Context)
+
+| Type | Range Example | Use |
+|---|---|---|
+| **Public IP** | Assigned by ISP/IANA, globally unique | Directly reachable from the Internet — primary external attack surface |
+| **Private IP** | 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 | Used inside LANs, not routable on the Internet directly |
+
+- **NAT (Network Address Translation)** allows many private IPs to share one public IP — this is why internal network devices aren't directly reachable from the Internet (a basic but important layer of protection, not a substitute for a firewall).
+
+---
+
+## 6. Why the Internet Matters for Ethical Hacking
+
+- **External Penetration Testing** = assessing exactly what an Internet-based attacker could reach and exploit (public IPs, exposed services, web apps).
+- **OSINT (Open Source Intelligence)** gathering relies entirely on Internet-based recon: WHOIS, DNS records, Shodan, social media, leaked credential databases.
+- **Threat landscape:** Almost all major breaches, ransomware campaigns, and APT (Advanced Persistent Threat) operations use the Internet as the initial access and command-and-control (C2) channel.
+- **Understanding "the Internet" as infrastructure** (not just "the web") helps explain large-scale incidents like BGP hijacks, DNS outages, and ISP-level attacks that go beyond a single company's network.
+
+---
+
+## Quick Revision Points
+- The Internet = a decentralized, global network of networks running on TCP/IP.
+- Key infrastructure: ISPs, backbone/Tier-1 networks, IXPs, DNS root servers, BGP routing.
+- Public IPs = directly attackable from anywhere; Private IPs = shielded via NAT (not true security, just obscurity/scoping).
+- The Internet enables trivial, automated, global reconnaissance and scanning — exposed services get probed within minutes.
+- External pentesting and OSINT are entirely built around understanding how the Internet exposes and connects infrastructure.
