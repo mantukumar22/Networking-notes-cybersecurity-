@@ -1,0 +1,75 @@
+# Chapter 11 — Types of Internet Connection
+### (Cybersecurity / Ethical Hacking Perspective)
+
+Different Internet connection types have different bandwidth, reliability, and — importantly — different security exposure profiles. Knowing the connection type gives a hacker/defender clues about likely vulnerabilities.
+
+---
+
+## 1. Dial-Up
+- **Description:** Uses telephone lines via a modem; very slow (up to 56 Kbps).
+- **Security relevance:** Mostly legacy/historical; low bandwidth naturally limits attack impact (e.g., DDoS traffic volume irrelevant to a line this slow), but still vulnerable to line tapping.
+
+## 2. DSL (Digital Subscriber Line)
+- **Description:** Uses existing telephone lines but a different frequency band than voice, allowing simultaneous internet + phone use.
+- **Security relevance:** Common in home/small business; router (modem-router combo) security is the primary concern — default credentials, outdated firmware.
+
+## 3. Cable Internet
+- **Description:** Uses coaxial cable (same infrastructure as cable TV).
+- **Security relevance:** Historically, shared bandwidth among neighborhood users raised theoretical eavesdropping concerns (mostly mitigated today by DOCSIS encryption), but cable modem vulnerabilities are still a known research area (e.g., "cable haunt" style firmware bugs).
+
+## 4. Fiber (FTTH - Fiber to the Home)
+- **Description:** Uses fiber optic cable directly to the premises; very high speed.
+- **Security relevance:** Physical tapping is much harder (see Chapter 8), but the endpoint device (ONT/router) is still a target for credential and firmware attacks — the medium is secure, the box at the end of it usually isn't.
+
+## 5. Satellite Internet
+- **Description:** Uses satellites in orbit to relay data to/from a dish.
+- **Security relevance:** Historically weak or absent encryption on some satellite communication links has enabled real, documented interception of satellite internet traffic by security researchers using basic equipment — a good case study in "convenience over security" tradeoffs.
+
+## 6. Wireless/WiFi Internet (Fixed Wireless / Public WiFi)
+- **Description:** Uses radio frequency to connect devices without cables.
+- **Security relevance:**
+  - **Public WiFi (cafes, airports, hotels)** is one of the highest-risk connection types — no guarantee of encryption, easy target for MITM, evil twin APs, and packet sniffing.
+  - This is why VPN use is heavily recommended on public WiFi — it's a textbook example taught in every security awareness training.
+
+## 7. Mobile/Cellular Internet (3G/4G/5G)
+- **Description:** Uses cellular towers and mobile carrier infrastructure.
+- **Security relevance:**
+  - Generally more secure than open public WiFi due to carrier-level encryption, but not immune — **IMSI catchers ("Stingrays")** can intercept cellular traffic by impersonating cell towers.
+  - 5G introduces new attack surface due to increased reliance on software-defined networking components.
+
+## 8. Leased Line
+- **Description:** Dedicated, private connection leased from a provider (not shared with other customers) — common for enterprises.
+- **Security relevance:** More secure/reliable due to dedicated bandwidth and typically stronger SLAs, but a compromised leased line (e.g., through a compromised ISP or MPLS provider) can be a severe supply-chain-style risk for an organization.
+
+---
+
+## 9. Comparison Table
+
+| Connection Type | Speed | Typical Security Concern |
+|---|---|---|
+| Dial-Up | Very Low | Line tapping (largely obsolete) |
+| DSL | Medium | Router credential/firmware attacks |
+| Cable | Medium-High | Modem firmware vulnerabilities |
+| Fiber | Very High | Endpoint (ONT/router) attacks, not the medium itself |
+| Satellite | Medium | Weak/no encryption on some links |
+| Public WiFi | Varies | MITM, evil twin, sniffing (highest risk category) |
+| Mobile/Cellular | High | IMSI catchers, SS7 protocol attacks |
+| Leased Line | Very High (dedicated) | Provider/supply-chain compromise |
+
+---
+
+## 10. Why This Matters for Ethical Hacking
+
+- **Risk assessment context:** Knowing how a target organization connects to the Internet (leased line vs consumer cable) shapes what kind of attacks are realistic and what physical/ISP-level risks apply.
+- **Public WiFi is a top real-world attack vector** covered in nearly every security awareness and red-team engagement — testing organizations' policies around public WiFi use is a common pentest/social engineering angle.
+- **Mobile network attacks** (IMSI catchers, SS7 exploitation) are an advanced but real area of study relevant to red teams working with government/high-value targets.
+
+---
+
+## Quick Revision Points
+- Connection type shapes both bandwidth and the realistic attack surface.
+- Public WiFi = highest common-risk connection type for the average user (MITM, sniffing, evil twin).
+- Fiber/leased lines are hard to tap physically, but the router/endpoint device remains the weak point.
+- Mobile/cellular has its own specialized attack class (IMSI catchers, SS7) beyond typical LAN/WAN attacks.
+- Always separate "is the medium secure" from "is the endpoint device secure" — attackers usually go for the weaker of the two.
+
