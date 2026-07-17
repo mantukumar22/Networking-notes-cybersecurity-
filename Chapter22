@@ -1,0 +1,85 @@
+# Chapter 22 — Job & Industry Requirements
+### (Cybersecurity / Ethical Hacking Perspective)
+
+This chapter maps everything learned so far (Chapters 1–21) to real career paths, certifications, and what employers actually look for in networking-security roles.
+
+---
+
+## 1. Common Cybersecurity Job Roles (Networking-Heavy)
+
+| Role | Focus | Networking Skills Required |
+|---|---|---|
+| **SOC Analyst (Tier 1/2)** | Monitor alerts, triage incidents | Protocol knowledge, packet analysis, log/SIEM basics |
+| **Penetration Tester** | Simulate attacks to find vulnerabilities | Deep protocol/OSI knowledge, scanning tools, exploitation |
+| **Network Security Engineer** | Design/maintain secure network infrastructure | Firewalls, VLANs, routing, VPNs, device hardening |
+| **Red Teamer** | Simulate advanced, persistent real-world attackers | All of the above + social engineering, evasion techniques |
+| **Blue Teamer / Defender** | Detect and respond to attacks | IDS/IPS, traffic analysis, incident response |
+| **Vulnerability Analyst** | Identify and prioritize vulnerabilities | Scanning tools, CVSS scoring, patch management understanding |
+| **Cloud Security Engineer** | Secure cloud-hosted networks/infrastructure | Networking fundamentals applied to VPCs, cloud firewalls, IAM |
+| **IoT/OT Security Specialist** | Secure industrial/embedded device networks | Chapter 18 concepts, specialized protocols (Modbus, MQTT) |
+
+---
+
+## 2. Relevant Certifications (By Career Stage)
+
+### Foundational
+- **CompTIA Network+** — Core networking fundamentals (directly builds on this entire course).
+- **CompTIA Security+** — Foundational security concepts, widely required baseline cert.
+
+### Intermediate
+- **CEH (Certified Ethical Hacker)** — Broad ethical hacking methodology and tool familiarity.
+- **CCNA (Cisco Certified Network Associate)** — Deep networking/routing/switching skill, valued for network security roles.
+
+### Advanced / Practical-Skill Focused
+- **OSCP (Offensive Security Certified Professional)** — Highly respected, hands-on penetration testing certification (heavy practical exam).
+- **GPEN / GWAPT (GIAC certifications)** — Specialized penetration testing certifications.
+- **CISSP** — Broader security management/leadership-focused certification (less hands-on, more governance/strategy).
+
+> **Practical note:** Certifications matter, but **hands-on demonstrated skill (Chapter 21's projects) combined with certifications** is the strongest combination employers look for — certs alone without practical ability are increasingly scrutinized in technical interviews.
+
+---
+
+## 3. Core Skills Employers Look For
+
+- **Networking fundamentals** (this entire course: OSI/TCP-IP, subnetting, protocols, devices)
+- **Operating system fluency** (Linux especially — most security tools run on Linux; Kali Linux familiarity)
+- **Scripting/automation basics** (Python, Bash) — automating recon, parsing logs, building simple tools
+- **Tool proficiency:** Nmap, Wireshark, Burp Suite, Metasploit, aircrack-ng
+- **Understanding of compliance frameworks:** PCI-DSS, HIPAA, NIST, ISO 27001 (depending on industry)
+- **Soft skills:** Clear written reporting (Chapter 21's report structure), communicating risk to non-technical stakeholders
+
+---
+
+## 4. Typical Career Progression Path
+
+1. **Entry-level:** Help desk / IT support → SOC Analyst Tier 1 (builds foundational networking + monitoring experience)
+2. **Mid-level:** SOC Analyst Tier 2/3, Junior Penetration Tester, Network Security Engineer
+3. **Senior-level:** Senior Penetration Tester, Red Team Lead, Security Architect
+4. **Specialized/Leadership:** CISO track, specialized fields (cloud security, OT/ICS security, threat intelligence)
+
+> Many professionals enter through **IT/networking roles first** (help desk, network admin) before transitioning into dedicated security roles — this course's foundation (Chapters 1–20) is exactly that on-ramp.
+
+---
+
+## 5. Industry Requirements Beyond Technical Skill
+
+- **Legal/ethical understanding:** Signed authorization (scope of engagement, rules of engagement) is mandatory before any penetration test — unauthorized testing is a crime regardless of good intentions.
+- **Continuous learning:** The threat landscape and tools change constantly — certifications and skills require ongoing renewal/practice (this field never "stays learned").
+- **Portfolio/community presence:** GitHub projects, CTF rankings (TryHackMe, HackTheBox), blog write-ups, and conference/community involvement (DEF CON, local security meetups) are increasingly valued alongside formal credentials.
+
+---
+
+## 6. Why This Chapter Matters
+
+- Connects the **entire syllabus** to a concrete, actionable career roadmap.
+- Helps a learner prioritize which certifications and skills to pursue next based on their target role.
+- Reinforces that networking fundamentals (Chapters 1–20) are the **non-negotiable base layer** for every single role listed above — there is no cybersecurity specialization that skips networking knowledge.
+
+---
+
+## Quick Revision Points
+- Roles span SOC Analyst, Pentester, Network Security Engineer, Red/Blue Teamer, Vulnerability Analyst, Cloud/IoT Security Specialist.
+- Certification path: Network+/Security+ (foundational) → CEH/CCNA (intermediate) → OSCP/GPEN/CISSP (advanced/specialized).
+- Employers value hands-on demonstrated skill (projects, CTFs) as much as or more than certifications alone.
+- Career progression often starts in general IT/networking before specializing into security.
+- Legal authorization and continuous learning are non-negotiable industry requirements, not optional extras.
