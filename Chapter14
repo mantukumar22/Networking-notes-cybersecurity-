@@ -1,0 +1,72 @@
+# Chapter 14 — Mobile Network Technology
+### (Cybersecurity / Ethical Hacking Perspective)
+
+Mobile networks carry billions of daily communications and are increasingly targeted by both cybercriminals and nation-state actors. This chapter covers the evolution of mobile network generations and their unique security concerns — distinct from WiFi (Chapter 13).
+
+---
+
+## 1. Evolution of Mobile Network Generations
+
+| Generation | Key Feature | Security Note |
+|---|---|---|
+| **1G** | Analog voice only | No encryption at all — trivially eavesdropped |
+| **2G (GSM)** | Digital voice, SMS | Uses A5/1 encryption — cryptographically weak, crackable with modest resources |
+| **3G (UMTS)** | Mobile data, faster speeds | Improved mutual authentication, but still has known weaknesses |
+| **4G (LTE)** | High-speed data, VoLTE | Stronger encryption (AES), but signaling protocol (Diameter) has its own flaws |
+| **5G** | Ultra-fast, low latency, massive IoT support | Improved security architecture, but larger attack surface due to network slicing, SDN/virtualization |
+
+---
+
+## 2. Core Mobile Network Security Concepts
+
+### a) SIM Card & IMSI
+- **IMSI (International Mobile Subscriber Identity):** Unique identifier for a mobile subscriber.
+- **Security relevance:** IMSI can be intercepted by fake base stations (IMSI catchers), enabling tracking and interception of calls/texts.
+
+### b) IMSI Catchers ("Stingrays")
+- **What they are:** Devices that impersonate a legitimate cell tower, tricking nearby phones into connecting to them instead of the real network.
+- **Capabilities:** Intercept calls/SMS, track device location, sometimes downgrade connections to less secure 2G to exploit weaker encryption.
+- **Real-world use:** Documented use by law enforcement/intelligence agencies; also a known tool in the broader surveillance/security research space.
+
+### c) SS7 (Signaling System 7) Vulnerabilities
+- **What it is:** A protocol suite used by telecom operators globally to route calls/SMS between networks — designed decades ago with an assumption of trusted operators only (similar to ARPANET's original trust assumption — Chapter 12).
+- **Known attacks:** SS7 vulnerabilities have been used to intercept SMS-based two-factor authentication (2FA) codes, track device location, and intercept calls — a major reason security experts recommend **app-based or hardware 2FA over SMS-based 2FA**.
+
+### d) SIM Swapping
+- **What it is:** A social-engineering attack where the attacker convinces a mobile carrier to transfer a victim's phone number to a SIM card the attacker controls.
+- **Impact:** Attacker receives the victim's calls/SMS, enabling account takeover of anything relying on SMS-based verification (banking, email, crypto wallets).
+- **Why it matters:** One of the most common real-world attack vectors against high-value targets (crypto holders, executives) — a pure social engineering + telecom process weakness, not a technical network exploit.
+
+### e) Mobile Malware
+- Malicious apps (often sideloaded or from compromised app stores) that can:
+  - Intercept SMS-based OTPs
+  - Track location
+  - Exfiltrate contacts/data
+  - Enable remote control (mobile RATs - Remote Access Trojans)
+
+---
+
+## 3. 5G-Specific Security Considerations
+
+- **Network Slicing:** 5G allows virtual "slices" of the network for different use cases (e.g., a slice for autonomous vehicles, another for consumer phones) — a misconfigured slice boundary could allow cross-slice attacks.
+- **Massive IoT Support:** 5G is designed to support huge numbers of IoT devices — expanding the attack surface significantly (ties directly into Chapter 18 - IoT).
+- **Software-Defined Networking (SDN)/Virtualization:** 5G core networks rely heavily on software rather than dedicated hardware — introducing traditional software vulnerabilities (misconfigurations, unpatched systems) into what was previously specialized telecom hardware.
+
+---
+
+## 4. Why This Matters for Ethical Hacking
+
+- **Red team/physical engagements** occasionally involve testing organizational resilience to IMSI catcher-style attacks (though legally and technically advanced/regulated).
+- **SMS-based 2FA weaknesses** (SS7, SIM swapping) are a critical talking point in any security awareness training and a common finding in security assessments of authentication mechanisms.
+- **Mobile application penetration testing** is its own specialized field (separate from network pentesting) — testing how mobile apps handle data, authentication, and communication over these mobile networks.
+- Understanding mobile network security shapes recommendations security professionals give: *"don't rely on SMS-based 2FA for anything high-value."*
+
+---
+
+## Quick Revision Points
+- Mobile generations: 1G (no encryption) → 2G (weak encryption) → 3G/4G (stronger) → 5G (strongest architecture, but larger/virtualized attack surface).
+- IMSI catchers ("Stingrays") impersonate cell towers to intercept communications and track devices.
+- SS7 protocol weaknesses enable SMS/call interception — a key reason SMS-based 2FA is considered weak.
+- SIM swapping is a social-engineering attack on telecom carriers, not a technical network exploit — but devastating in impact.
+- 5G introduces new risks via network slicing and heavy reliance on virtualization/software (SDN).
+
