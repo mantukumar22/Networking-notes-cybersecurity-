@@ -1,0 +1,87 @@
+# Chapter 20 — WAN Connection
+### (Cybersecurity / Ethical Hacking Perspective)
+
+WANs connect geographically dispersed networks (branch offices, data centers, cloud environments) together — extending an organization's attack surface far beyond a single building's LAN.
+
+---
+
+## 1. What Is a WAN?
+
+A Wide Area Network spans a large geographic area (city, country, or global), connecting multiple LANs together — typically via ISPs or dedicated service providers. The Internet itself (Chapter 10) is the largest WAN in existence.
+
+---
+
+## 2. WAN Connection Technologies
+
+| Technology | Description | Security Relevance |
+|---|---|---|
+| **Leased Line** | Dedicated, private point-to-point connection | More secure (not shared), but compromise of the provider is a supply-chain risk |
+| **MPLS (Multiprotocol Label Switching)** | Provider-managed WAN connecting multiple sites efficiently | Traffic isolation between customers relies on provider correctly maintaining separation — misconfig risk |
+| **VPN (Site-to-Site)** | Encrypted tunnel over the public Internet connecting two sites | Cost-effective alternative to leased lines/MPLS; security depends entirely on proper encryption/key management |
+| **SD-WAN (Software-Defined WAN)** | Software-based approach to managing WAN connections dynamically across multiple links | Centralizes control (efficient) but the SD-WAN controller itself becomes a high-value target |
+| **Frame Relay / ATM** | Legacy WAN technologies | Mostly obsolete; historical relevance only |
+
+---
+
+## 3. WAN vs LAN — Security Comparison
+
+| Aspect | LAN | WAN |
+|---|---|---|
+| Geographic Scope | Single building/campus | City/country/global |
+| Ownership/Control | Fully owned/controlled by the organization | Often relies on third-party ISPs/providers |
+| Attack Surface | Bounded, more controllable | Much larger, spans multiple trust boundaries |
+| Common Risks | Internal segmentation, rogue devices | Provider compromise, interception across public infrastructure, BGP-related risks |
+
+---
+
+## 4. Site-to-Site VPN Security Essentials
+
+- **Encryption protocols:** IPSec (most common for site-to-site) or SSL/TLS-based VPNs.
+- **Authentication:** Pre-shared keys (PSK) or certificate-based authentication — certificates are stronger and more manageable at scale.
+- **Common misconfigurations found in assessments:**
+  - Weak/default pre-shared keys
+  - Overly permissive routing between sites (no segmentation once the tunnel is up)
+  - Outdated/deprecated encryption algorithms (e.g., DES, weak Diffie-Hellman groups) still configured
+
+---
+
+## 5. WAN-Specific Attack Considerations
+
+### a) Traffic Interception Across Public Infrastructure
+- Even encrypted WAN links (VPN) rely on the strength of the encryption and key management — weak configurations can be attacked.
+
+### b) Provider/Third-Party Risk
+- Organizations often have limited visibility/control over their ISP's or MPLS provider's internal security — a compromised provider is a serious, hard-to-detect risk.
+
+### c) BGP Hijacking (WAN/Internet-scale routing attacks)
+- As covered in Chapter 10 — misdirecting traffic at the routing level between networks, sometimes used to intercept traffic across WAN links at Internet scale.
+
+### d) SD-WAN Controller Compromise
+- Because SD-WAN centralizes control of multiple WAN links, compromising the controller could allow an attacker to manipulate traffic routing across an entire organization's WAN.
+
+---
+
+## 6. Best Practices for Securing WAN Connections
+
+- Use strong encryption (IPSec with modern algorithms) for all site-to-site connections.
+- Prefer certificate-based authentication over static pre-shared keys where possible.
+- Apply **the same segmentation principles across WAN-connected sites** as within a single LAN — don't assume a remote site is automatically "trusted" just because it's connected via VPN/MPLS.
+- Monitor WAN links for unusual traffic patterns (a sign of possible interception, exfiltration, or provider-level compromise).
+- Regularly audit third-party/provider security posture as part of vendor risk management.
+
+---
+
+## 7. Why This Matters for Ethical Hacking
+
+- **Enterprise pentests** frequently include testing site-to-site VPN configurations, especially for organizations with multiple branch offices.
+- **Understanding WAN architecture** helps a pentester map an organization's full attack surface — not just a single office LAN, but every connected site and cloud environment.
+- **Third-party/vendor risk assessments** are a growing area of cybersecurity work, directly tied to understanding how organizations connect over WANs to providers, partners, and cloud services.
+
+---
+
+## Quick Revision Points
+- WAN connects geographically dispersed LANs — via leased lines, MPLS, site-to-site VPN, or SD-WAN.
+- WAN attack surface is larger and involves more third parties (ISPs, providers) than a single LAN.
+- Site-to-site VPN security depends on strong encryption (IPSec) and proper authentication (certificates > static PSKs).
+- BGP hijacking and provider compromise are WAN/Internet-scale risks beyond a single organization's direct control.
+- Segmentation principles must extend across WAN-connected sites — a remote office shouldn't be automatically fully trusted.
