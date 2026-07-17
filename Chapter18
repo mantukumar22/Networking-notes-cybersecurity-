@@ -1,0 +1,93 @@
+# Chapter 18 — IoT (Internet of Things)
+### (Cybersecurity / Ethical Hacking Perspective)
+
+IoT represents one of the **fastest-growing and least-secured attack surfaces** in modern networking. This chapter is directly relevant to real-world incidents (Mirai botnet, smart home breaches) and is a growing specialization within cybersecurity.
+
+---
+
+## 1. What Is IoT?
+
+Internet of Things refers to everyday physical devices embedded with sensors, software, and network connectivity — enabling them to collect and exchange data. Examples: smart cameras, thermostats, wearables, smart locks, industrial sensors, medical devices.
+
+---
+
+## 2. Why IoT Is Especially Insecure
+
+| Reason | Explanation |
+|---|---|
+| **Weak/default credentials** | Many devices ship with default admin passwords that are never changed |
+| **Minimal or no security updates** | Manufacturers often stop patching devices quickly, or never patch at all |
+| **Resource constraints** | Limited CPU/memory means devices often skip encryption or use weak implementations |
+| **Poor authentication** | Many IoT devices lack proper authentication for their APIs/management interfaces |
+| **Massive scale** | Billions of devices = billions of potential entry points, often unmonitored |
+| **Lack of visibility** | Organizations frequently don't even have a full inventory of IoT devices connected to their network ("shadow IoT") |
+
+---
+
+## 3. Real-World IoT Attack Case Study: Mirai Botnet
+
+- **What happened:** Mirai malware scanned the Internet for IoT devices (cameras, routers, DVRs) still using **default factory credentials**, compromised them, and turned them into a massive botnet.
+- **Impact:** Used to launch some of the largest DDoS attacks in history (including a major attack on DNS provider Dyn in 2016, disrupting large portions of the Internet).
+- **Lesson:** A huge, damaging attack was built almost entirely on the simplest possible vulnerability — unchanged default passwords, at massive scale.
+
+---
+
+## 4. Common IoT Attack Vectors
+
+### a) Default Credential Exploitation
+- Attackers use known default username/password lists (e.g., admin/admin) against exposed IoT device management interfaces.
+
+### b) Firmware Vulnerabilities
+- Outdated or unpatched firmware often contains known, unpatched CVEs — many IoT devices never receive updates after purchase.
+
+### c) Insecure Communication Protocols
+- Many IoT devices use unencrypted protocols (MQTT, CoAP) without proper authentication/encryption configured, exposing data in transit.
+
+### d) Physical Access Attacks
+- Many IoT devices (smart locks, cameras) can be physically accessed and have their firmware/storage extracted or manipulated (chip-off attacks, UART/JTAG access).
+
+### e) API/Cloud Backend Exploitation
+- Most IoT devices rely on a cloud backend/API for control (e.g., a mobile app talking to a cloud service) — vulnerabilities in that backend can compromise every connected device at once.
+
+### f) Botnets & DDoS Recruitment
+- Compromised IoT devices are frequently recruited into botnets (like Mirai) for large-scale DDoS attacks, cryptomining, or as proxy/relay points to hide attacker traffic.
+
+---
+
+## 5. IoT in Different Contexts
+
+| Context | Examples | Unique Risk |
+|---|---|---|
+| **Consumer/Smart Home** | Smart cameras, locks, thermostats | Privacy invasion, home network pivot point |
+| **Industrial IoT (IIoT) / OT** | Sensors in manufacturing, SCADA/ICS systems | Safety-critical — an attack can cause physical damage or safety incidents, not just data loss |
+| **Medical IoT (IoMT)** | Insulin pumps, pacemakers, hospital monitoring devices | Life-safety risk — among the most sensitive category of IoT security |
+| **Wearables** | Fitness trackers, smartwatches | Personal data/location leakage |
+
+---
+
+## 6. IoT Security Best Practices
+
+- Change all default credentials immediately upon setup.
+- Segment IoT devices onto a **separate VLAN** from critical systems (never mix IoT and sensitive corporate/personal devices on the same flat network).
+- Regularly check for and apply firmware updates.
+- Disable unnecessary services/ports on devices (UPnP, remote management if unused).
+- Monitor network traffic for unusual IoT device behavior (e.g., a smart bulb suddenly making outbound connections to unusual servers).
+- Choose devices from manufacturers with a track record of ongoing security support.
+
+---
+
+## 7. Why This Matters for Ethical Hacking
+
+- **IoT penetration testing** is a growing specialization — testing device firmware, companion mobile apps, cloud APIs, and physical hardware interfaces.
+- **IoT devices are common initial-access points** in broader network compromises — a hacked smart camera can be a pivot point into the rest of a corporate or home network.
+- **Shodan** (a search engine for Internet-connected devices) is heavily used in IoT reconnaissance — revealing exposed IoT devices worldwide, often with default credentials still active.
+- Understanding IIoT/OT and medical IoT risk is increasingly important as cybersecurity intersects with **physical safety**, not just data confidentiality.
+
+---
+
+## Quick Revision Points
+- IoT devices are insecure by default due to weak credentials, poor patching, and resource constraints.
+- Mirai botnet is the textbook case study: default credentials at massive scale → history's biggest DDoS attacks.
+- Attack vectors include default creds, firmware bugs, insecure protocols (MQTT/CoAP), physical hardware access, and cloud/API backend flaws.
+- IIoT/OT and medical IoT carry life-safety risk, not just data risk — a different threat model than typical IT security.
+- Best practice: separate VLAN for IoT, change defaults, patch when possible, monitor traffic — assume every IoT device is a potential weak link.
