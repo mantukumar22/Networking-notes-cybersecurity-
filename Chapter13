@@ -1,0 +1,102 @@
+# Chapter 13 — Wireless Technology
+### (Cybersecurity / Ethical Hacking Perspective)
+
+Wireless networking is one of the **highest-value chapters for practical ethical hacking** — WiFi hacking is a core skill tested in CEH, OSCP, and real-world red team engagements. This chapter builds directly on Chapter 8 (unguided media).
+
+---
+
+## 1. What Is Wireless Technology?
+
+Communication using radio frequency (RF) signals instead of physical cables — includes WiFi, Bluetooth, NFC, and cellular. The core security challenge: **the "cable" is the open air, reachable by anyone in range.**
+
+---
+
+## 2. WiFi Standards (802.11 Family)
+
+| Standard | Band | Max Speed | Security Note |
+|---|---|---|---|
+| 802.11b/g | 2.4 GHz | Up to 54 Mbps | Older, more interference, still widely deployed (legacy risk) |
+| 802.11n | 2.4/5 GHz | Up to 600 Mbps | Introduced WPA2 as standard expectation |
+| 802.11ac | 5 GHz | Up to ~1.3 Gbps | Common in modern routers |
+| 802.11ax (WiFi 6) | 2.4/5/6 GHz | Multi-Gbps | Supports WPA3 |
+
+---
+
+## 3. WiFi Security Protocols (Critical Knowledge)
+
+| Protocol | Encryption | Security Status |
+|---|---|---|
+| **WEP** | RC4, 40/104-bit key | **Broken** — crackable in minutes using IV collision attacks (aircrack-ng). Should never be used today. |
+| **WPA** | TKIP | Improved over WEP but still has known weaknesses (introduced as a stopgap) |
+| **WPA2** | AES-CCMP | Strong when configured properly; vulnerable to offline dictionary attacks against weak passphrases (via 4-way handshake capture) and **KRACK** (Key Reinstallation Attack) |
+| **WPA3** | SAE (Simultaneous Authentication of Equals) | Current best standard; resistant to offline dictionary attacks; still evolving as new research emerges |
+
+> **Practical hacking note:** Cracking WPA2 in practice usually means **capturing the 4-way handshake** (via a deauth attack to force reconnection) and running an offline dictionary/brute-force attack (aircrack-ng, hashcat) — you're attacking the **passphrase**, not the encryption algorithm itself.
+
+---
+
+## 4. Common Wireless Attacks
+
+### a) Deauthentication Attack
+- Forces a connected client to disconnect from the AP by spoofing deauth frames — used to:
+  - Force a handshake recapture (for WPA2 cracking)
+  - Perform a denial-of-service on wireless clients
+
+### b) Evil Twin Attack
+- Attacker sets up a rogue AP mimicking a legitimate network's SSID — victims connect thinking it's genuine, allowing traffic interception/credential harvesting.
+
+### c) WPS (WiFi Protected Setup) Attacks
+- WPS PIN brute-forcing (e.g., Reaver/Pixie Dust attack) can bypass strong WPA2 passphrases entirely by exploiting the much weaker WPS PIN mechanism — a classic example of "the strongest lock defeated by a weak side door."
+
+### d) Rogue Access Points
+- Unauthorized APs plugged into a legitimate network (often by employees for convenience) — creates an unmonitored backdoor into an otherwise secured network.
+
+### e) Bluetooth Attacks
+- **Bluejacking:** Sending unsolicited messages/data to Bluetooth devices.
+- **Bluesnarfing:** Unauthorized access to data on a Bluetooth device.
+- **Bluebugging:** Gaining full control over a device via Bluetooth vulnerabilities.
+
+### f) Jamming
+- Flooding the RF spectrum with noise to disrupt legitimate wireless communication — a physical-layer DoS attack.
+
+---
+
+## 5. Wireless Security Best Practices (Defensive Side)
+
+- Use **WPA3** (or WPA2-AES minimum) — never WEP.
+- Disable **WPS** entirely.
+- Use strong, long passphrases (resistant to dictionary attacks).
+- Disable SSID broadcast only as a minor obscurity measure (not a real security control — SSIDs are still discoverable).
+- Implement **MAC filtering** as a minor layer (easily bypassed via MAC spoofing, so not a primary control).
+- Use **802.1X/Enterprise authentication** (RADIUS) in business environments instead of a shared pre-shared key (PSK).
+- Regularly monitor for rogue APs (wireless intrusion detection systems - WIDS).
+
+---
+
+## 6. Common Wireless Hacking Tools (For Awareness)
+
+| Tool | Purpose |
+|---|---|
+| **Aircrack-ng suite** | Packet capture, deauth, handshake cracking |
+| **Wireshark** | Wireless packet analysis |
+| **Reaver / Bully** | WPS PIN attacks |
+| **Kismet** | Wireless network detection/monitoring |
+| **Wifite** | Automated wireless auditing |
+
+---
+
+## 7. Why This Matters for Ethical Hacking
+
+- WiFi hacking is one of the most commonly tested practical skills in CEH and OSCP-style certifications.
+- Physical proximity attacks (evil twin, deauth) are realistic and low-cost — no need for remote exploitation, just being nearby.
+- Enterprise wireless assessments are a standard part of physical red team/pentest engagements (parking lot attacks, testing guest WiFi isolation).
+
+---
+
+## Quick Revision Points
+- WEP = broken; WPA2 = strong if passphrase is strong; WPA3 = current best standard.
+- Most real-world WPA2 attacks target the passphrase via captured handshakes, not the encryption algorithm.
+- Deauth attacks, evil twin APs, and WPS PIN attacks are the three most practical/common wireless attack vectors.
+- Bluetooth has its own attack class: bluejacking, bluesnarfing, bluebugging.
+- Defensive best practice: WPA3/WPA2-AES, disable WPS, strong passphrases, 802.1X for enterprise, monitor for rogue APs.
+
