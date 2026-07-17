@@ -1,0 +1,91 @@
+# Chapter 15 — Networking Protocols
+### (Cybersecurity / Ethical Hacking Perspective)
+
+Protocols are the "rules of conversation" between systems. Nearly every practical hack targets a **specific protocol's weakness** — this chapter is one of the most exploit-relevant in the entire course.
+
+---
+
+## 1. Web & Application Protocols
+
+| Protocol | Port | Function | Security Relevance |
+|---|---|---|---|
+| **HTTP** | 80 | Web traffic, unencrypted | All data sent in plaintext — sniffable, MITM-able |
+| **HTTPS** | 443 | Encrypted web traffic (TLS/SSL) | Standard for secure web; still vulnerable to SSL stripping, weak cipher configs, cert issues |
+| **FTP** | 20/21 | File transfer | **Plaintext credentials and data** — one of the most commonly flagged insecure protocols in pentests |
+| **SFTP/FTPS** | 22/990 | Secure file transfer | Encrypted alternatives to FTP |
+| **SMTP** | 25 | Email sending | Target of email spoofing (lacks built-in sender verification without SPF/DKIM/DMARC) |
+| **POP3/IMAP** | 110/143 | Email retrieval | Plaintext versions expose credentials; use POP3S/IMAPS (995/993) instead |
+
+---
+
+## 2. Remote Access Protocols
+
+| Protocol | Port | Function | Security Relevance |
+|---|---|---|---|
+| **Telnet** | 23 | Remote CLI access | **Completely plaintext** — credentials and commands fully visible to sniffing; should never be used today |
+| **SSH** | 22 | Encrypted remote CLI access | Secure replacement for Telnet; still a top brute-force target (weak passwords, default creds) |
+| **RDP** | 3389 | Remote desktop (Windows) | One of the **most commonly exploited/brute-forced services** exposed to the Internet — top initial access vector in ransomware incidents |
+| **VNC** | 5900 | Remote desktop (cross-platform) | Often runs with weak/no authentication by default |
+
+---
+
+## 3. Name Resolution & Configuration Protocols
+
+| Protocol | Port | Function | Security Relevance |
+|---|---|---|---|
+| **DNS** | 53 | Domain name resolution | Target of DNS spoofing/poisoning, DNS tunneling (data exfiltration/C2 channel), DNS amplification DDoS |
+| **DHCP** | 67/68 | Automatic IP assignment | Target of rogue DHCP servers, DHCP starvation attacks |
+| **NTP** | 123 | Time synchronization | Target of NTP amplification DDoS attacks |
+
+---
+
+## 4. File Sharing & Management Protocols
+
+| Protocol | Port | Function | Security Relevance |
+|---|---|---|---|
+| **SMB (Server Message Block)** | 445 | Windows file/printer sharing | Historically massive attack surface — **EternalBlue (WannaCry, NotPetya)** exploited SMBv1 |
+| **NFS** | 2049 | Unix/Linux file sharing | Misconfigurations can expose file systems without authentication |
+| **SNMP** | 161/162 | Network device monitoring/management | Default/weak "community strings" (essentially passwords) are a common misconfiguration exploited for device takeover/info disclosure |
+
+---
+
+## 5. Security-Specific Protocols
+
+| Protocol | Function | Security Relevance |
+|---|---|---|
+| **TLS/SSL** | Encrypts application-layer traffic | Foundation of HTTPS; weaknesses (old versions, weak ciphers) are actively tested in security assessments |
+| **IPSec** | Encrypts traffic at the network layer (used in VPNs) | Core of many site-to-site VPN implementations |
+| **Kerberos** | Authentication protocol (used heavily in Windows/Active Directory) | Target of "Kerberoasting" and "Golden/Silver Ticket" attacks — critical in AD penetration testing |
+| **RADIUS/TACACS+** | Centralized authentication for network devices | Misconfiguration can allow authentication bypass |
+
+---
+
+## 6. Protocol-to-Attack Quick Reference
+
+| Insecure Protocol | Why It's Dangerous |
+|---|---|
+| Telnet | Plaintext everything |
+| FTP | Plaintext credentials/data |
+| HTTP | Plaintext web traffic |
+| SMBv1 | EternalBlue and related exploits |
+| SNMP (v1/v2) | Weak default community strings, no encryption |
+
+> **Golden rule for a pentester:** Any protocol found running that transmits data **in plaintext** is an automatic finding in a security assessment — this is one of the fastest, highest-value observations you can make when scanning a network (Nmap service detection reveals this instantly).
+
+---
+
+## 7. Why This Matters for Ethical Hacking
+
+- **Service enumeration** (Nmap `-sV`) identifies exactly which protocols/services are running — this chapter is the "menu" of what you're looking for.
+- **Most real-world breaches** trace back to exploitation of a specific insecure or misconfigured protocol (RDP brute-force, SMB exploitation, weak SNMP strings).
+- **Protocol knowledge directly maps to exploit selection** in tools like Metasploit — knowing the protocol tells you which module/exploit category to consider.
+
+---
+
+## Quick Revision Points
+- Plaintext protocols (Telnet, FTP, HTTP, SNMPv1/v2) are automatic security findings — replace with encrypted equivalents (SSH, SFTP, HTTPS, SNMPv3).
+- RDP and SMB are two of the most commonly exploited remote access/file-sharing protocols in real-world ransomware attacks.
+- DNS is abused for spoofing, poisoning, tunneling (data exfil), and amplification DDoS.
+- Kerberos (Active Directory) has its own dedicated attack class (Kerberoasting, Golden/Silver Ticket) — critical for enterprise pentesting.
+- Protocol enumeration is one of the very first and most valuable steps in any penetration test.
+
